@@ -5,15 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { reducers, metaReducers } from './reducers/reducers';
 import { StoreModule } from '@ngrx/store';
+import { NavbarModule } from './shared/components/navbar/navbar.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers,{metaReducers})
+    StoreModule.forRoot(reducers,{metaReducers}),
+    NavbarModule
   ],
   
   providers: [],

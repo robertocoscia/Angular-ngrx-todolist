@@ -1,7 +1,43 @@
-.button-delete{
-    background-color: red;
-}
+.wrapper{
+    margin-top:15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border:1px solid brown;
+        background-color: rgba(212, 200, 131, 0.664);
+        width: 400px;
+        height:auto;
+        padding-bottom:15px;
+        padding-left:15px;
+        padding-right:15px;
+        .button-delete{
+            background-color: red;
+        }
+        
+        .button-modify{
+            background-color: lightblue;
+        }
+        .list-container{
+            display:flex;
+            flex-direction: column;
+            ul{
+                display: flex;
+                flex-direction: row;
+                justify-content: left;
+                button{
+                    margin-left:10px;
+                }
+                input{
+                    margin-left:10px;
+                }
+            }
 
-.button-modify{
-    background-color: lightblue;
+        }
+    }
 }
