@@ -1,4 +1,5 @@
 # Ngrx Todo List
+This is a project with the purpose of practicing concepts of NGRX in Angular.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.5.
 
