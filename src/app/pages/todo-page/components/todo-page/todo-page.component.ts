@@ -17,10 +17,15 @@ export class TodoPageComponent implements OnInit {
   textInput=new FormControl('')
   @ViewChild('editInput') txtEditInput: ElementRef;
   todos$:Observable<Todo[]>
-  todo:Todo={id:1,text:""}
+  editTodoIndex: number = -1;
+  id: number = 0;
+  todoItem:Todo={}
+
   constructor(private store: Store<todoState>) {
     this.todos$= this.store.pipe(select(selectInputs))
     this.txtEditInput=new ElementRef('')
+    this.todos$.subscribe(todo=> this.todoItem==todo)
+    this.todos$.subscribe(todo=> todo.map(t => t.id == this.id))
   }
 
   ngOnInit(): void {
@@ -30,24 +35,16 @@ export class TodoPageComponent implements OnInit {
     this.store.dispatch(deleteTodo({index}));
   }
 
-  onEdit(index:number,text:string){
-    this.isEdited=true;
-    this.textInput.setValue(this.todo.text)
+  onEdit(id:number,text:string){
+    
+    this.textInput.setValue(this.textInput.value)
     setTimeout(()=>{
       this.txtEditInput.nativeElement.select();
     });
-    //this.store.dispatch(updateTodo({index,text}))
-  }
-
-  onUpdate(){
-    this.isEdited=false;
+    this.store.dispatch( updateTodo({index:id, text: this.textInput.value}) );
     
-    if(this.textInput.value !== this.todo.text && !this.textInput.invalid)
-    {
-      this.store.dispatch( updateTodo({index: this.todo.id, text: this.textInput.value}) );
-    }
-
-    return;
+    this.textInput.setValue('')
   }
 
+  
 }

@@ -14,11 +14,11 @@ export const initialState: todoState = {
 export const todoReducer= createReducer(
     initialState,
     on(TodoActions.addTodo,
-        (state:todoState,{id,text})=>({
+        (state: todoState, { text }) => ({
             ...state,
-            todos:[...state.todos,{id,text}]
+            todos: [...state.todos, { text }]
         })
-        ),
+    ),
     on(TodoActions.deleteTodo,
         (state:todoState, {index})=>({
             ...state,
@@ -26,20 +26,12 @@ export const todoReducer= createReducer(
         })
     ),
     on(TodoActions.updateTodo,
-        (state:todoState, {index,text})=>({
-            ...state,
-            todos:[...state.todos.map((todo)=>{
-                if(todo.id===index){
-                    return{
-                        ...todo,
-                        text:text
-                    }
-                }else{
-                    return todo;
-                }
-            })]   
-        })
-    ),
+        (state: todoState, { text, index }) => {
+            let todos = JSON.parse(JSON.stringify(state.todos));
+            todos[index].text = text;
+            return { ...state, todos };
+        }
+    )
     
 )
 

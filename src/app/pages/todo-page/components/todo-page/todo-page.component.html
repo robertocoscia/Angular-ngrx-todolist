@@ -1,3 +1,4 @@
+
 <div class="wrapper">
     <div class="container">
         <h1>Add Todo:</h1>
@@ -6,11 +7,9 @@
             <ul *ngFor="let todo of todos$ | async; let i=index">
                 <li >{{i}} - {{todo.text}}</li>
                 <button class="button-delete" (click)="onDelete(i)">X</button>
-                <button class="button-modify" (click)="onEdit(i,todo.text)">Modify</button>
-                <input type="text" #editInput [formControl]="textInput" (blur)="onUpdate()"/>
+                <button class="button-modify" (click)="onEdit(i,todo.text || '')">Modify</button>
+                <input type="text" #editInput [formControl]="textInput" />
             </ul>
         </div>
     </div>
 </div>
-
-

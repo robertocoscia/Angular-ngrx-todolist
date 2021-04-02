@@ -1,9 +1,10 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { Todo } from 'src/app/shared/models/Todo.model';
 import { todoState } from 'src/app/shared/reducers/todo.reducers';
+import { selectInputs } from 'src/app/shared/selectors/todo.selector';
 import {addTodo} from '../../../../shared/actions/todo.actions'
 
 @Component({
@@ -12,21 +13,27 @@ import {addTodo} from '../../../../shared/actions/todo.actions'
   styleUrls: ['./add-todo.component.scss']
 })
 export class AddTodoComponent implements OnInit {
-  inputText:FormControl;
-  todo:Todo={id:1,text:""}
+  todos$: Observable<Todo[]>
+  inputText: FormControl;
+  editInputText: FormControl;
+  editTodoIndex: number = -1;
+  id: number = 0;
   constructor(private store: Store<todoState>){ 
-    this.inputText=new FormControl('');
+    this.inputText = new FormControl('');
+    this.editInputText = new FormControl('');
+    this.todos$ = this.store.pipe(select(selectInputs))
+    this.todos$.subscribe(todo => todo.map(t => t.id == this.id))
   }
 
   ngOnInit(): void {
   }
 
-  addTodoItem(id:number,text:string){ 
-    if (this.inputText.invalid) {
+  addTodoItem() {
+    if (this.inputText.value === '') {
       return;
     }
-    this.store.dispatch(addTodo({id:this.todo.id ,text:this.inputText.value}))
-    this.inputText.reset();
+    this.store.dispatch(addTodo({ text: this.inputText.value }))
+    this.inputText.setValue('');
   }
 
 }
