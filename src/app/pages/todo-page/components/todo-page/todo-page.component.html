@@ -8,7 +8,7 @@
                 <li >{{i}} - {{todo.text}}</li>
                 <button class="button-delete" (click)="onDelete(i)">X</button>
                 <button class="button-modify" (click)="onEdit(i,todo.text || '')">Modify</button>
-                <input type="text" #editInput [formControl]="textInput" />
+                <input type="text" [formControl]="textInput"  >
             </ul>
         </div>
     </div>

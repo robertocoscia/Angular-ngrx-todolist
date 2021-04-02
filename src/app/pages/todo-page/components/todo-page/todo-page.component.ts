@@ -15,36 +15,40 @@ import { selectInputs } from 'src/app/shared/selectors/todo.selector';
 export class TodoPageComponent implements OnInit {
   isEdited:boolean=false;
   textInput=new FormControl('')
+  textTodo=new FormControl('')
   @ViewChild('editInput') txtEditInput: ElementRef;
   todos$:Observable<Todo[]>
-  editTodoIndex: number = -1;
   id: number = 0;
   todoItem:Todo={}
+  todo:Todo={}
+  
 
   constructor(private store: Store<todoState>) {
     this.todos$= this.store.pipe(select(selectInputs))
     this.txtEditInput=new ElementRef('')
     this.todos$.subscribe(todo=> this.todoItem==todo)
     this.todos$.subscribe(todo=> todo.map(t => t.id == this.id))
+
   }
 
   ngOnInit(): void {
+    
   }
 
   onDelete(index:number){  
     this.store.dispatch(deleteTodo({index}));
   }
-
+//when modifying todo and then adding a new one, will add the now one and automatically
+//fill with the modify section with the previous todo input
   onEdit(id:number,text:string){
-    
+    this.id=id;
+    text=this.textInput.value
+    this.isEdited==true;
     this.textInput.setValue(this.textInput.value)
-    setTimeout(()=>{
-      this.txtEditInput.nativeElement.select();
-    });
     this.store.dispatch( updateTodo({index:id, text: this.textInput.value}) );
-    
     this.textInput.setValue('')
   }
 
   
+
 }
